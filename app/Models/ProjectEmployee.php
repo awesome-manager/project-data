@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Awesome\Foundation\Traits\Models\AwesomeModel;
 
 class ProjectEmployee extends Model
 {

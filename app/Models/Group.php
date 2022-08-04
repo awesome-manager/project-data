@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Awesome\Foundation\Traits\AwesomeModel;
+use Awesome\Foundation\Traits\Models\AwesomeModel;
 
 class Group extends Model
 {

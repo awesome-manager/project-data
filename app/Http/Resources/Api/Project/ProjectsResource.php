@@ -2,18 +2,18 @@
 
 namespace App\Http\Resources\Api\Project;
 
-use Awesome\Foundation\Traits\Resourceable;
 use Illuminate\Database\Eloquent\Collection;
+use Awesome\Foundation\Traits\Resources\Resourceable;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ProjectsResource extends ResourceCollection
 {
     use Resourceable;
 
-    private mixed $groups;
-    private mixed $customers;
+    private Collection $groups;
     private Collection $projects;
     private Collection $statuses;
+    private Collection $customers;
     private Collection $groupCustomers;
 
 
