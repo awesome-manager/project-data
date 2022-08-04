@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface ProjectRepository
 {
-    //
+    public function findAllActive(): Collection;
 }

@@ -17,4 +17,11 @@ Route::prefix('v1')->group(function () {
     Route::get('check', function () {
         return 'project-data is OK';
     });
+
+    Route::group(['prefix' => 'projects', 'namespace' => 'Project'], function () {
+        Route::get('/', [
+            'uses' => 'ProjectController@findProjects',
+            'as' => 'api.projects.find'
+        ]);
+    });
 });

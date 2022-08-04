@@ -7,5 +7,21 @@ use App\ProjectData\Contracts\Repositories\ProjectRepository as RepositoryContra
 
 class ProjectRepository extends AbstractRepository implements RepositoryContract
 {
-    //
+    public function findAllActive(): Collection
+    {
+        return $this->getModel()->newQuery()
+            ->select([
+                'id',
+                'title',
+                'group_customer_id',
+                'type',
+                'status_id',
+                'budget',
+                'expected_profitability',
+                'average_rate',
+                'comment'
+            ])->where('is_active', true)
+            ->orderByDesc('started_at')
+            ->get();
+    }
 }
