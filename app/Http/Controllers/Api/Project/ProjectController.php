@@ -12,7 +12,9 @@ class ProjectController extends Controller
     {
         $projects = Repository::projects()->findAllActive();
 
-        dd(Repository::projects()->findAllActive());
+        $groupCustomers = Repository::groupCustomer()->findByIds($projects->pluck('group_customer_id')->unique()->all());
+
+        dd(compact('projects', 'groupCustomers'));
 //        return response()->jsonResponse((new ProjectsResource(Repository::projects()->findAllActive()))->toArray());
     }
 }

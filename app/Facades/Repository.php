@@ -8,6 +8,7 @@ use App\ProjectData\Contracts\Repositories\Repository as RepositoryContract;
 
 /**
  * @method static Repositories\ProjectRepository projects()
+ * @method static Repositories\GroupCustomerRepository groupCustomer()
  */
 class Repository extends Facade
 {
