@@ -7,7 +7,7 @@ use App\ProjectData\Contracts\Repositories;
 use App\ProjectData\Contracts\Repositories\Repository as RepositoryContract;
 
 /**
- * @method static
+ * @method static Repositories\ProjectRepository projects()
  */
 class Repository extends Facade
 {

@@ -24,7 +24,9 @@ class ProjectDataServiceProvider extends ServiceProvider implements DeferrablePr
      */
     private function registerRepositories(): void
     {
-        //
+        $this->app->bind(Contracts\Repositories\ProjectRepository::class, function () {
+            return new Repositories\ProjectRepository(new Models\Project());
+        });
     }
 
     /**
@@ -41,7 +43,7 @@ class ProjectDataServiceProvider extends ServiceProvider implements DeferrablePr
     public function provides(): array
     {
         return [
-            //
+            Contracts\Repositories\ProjectRepository::class,
         ];
     }
 }
