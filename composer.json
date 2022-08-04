@@ -9,7 +9,9 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "my-awesome-packages/foundation": "^1.0",
+        "my-awesome-packages/rest": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -19,6 +21,16 @@
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:my-awesome-packages/foundation.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:my-awesome-packages/rest.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

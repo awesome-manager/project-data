@@ -185,6 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Awesome\Rest\RestProvider::class,
 
         /*
          * Application Service Providers...

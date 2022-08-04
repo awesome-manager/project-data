@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1abc7822bd9f28e9a62986817bf04f76",
+    "content-hash": "e5d4e5e3338c591cbfb6a36284cd294e",
     "packages": [
         {
             "name": "brick/math",
@@ -1701,6 +1701,86 @@
                 }
             ],
             "time": "2022-06-09T08:59:12+00:00"
+        },
+        {
+            "name": "my-awesome-packages/foundation",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:my-awesome-packages/foundation.git",
+                "reference": "a050cebee1032a492af619a85641534bc73eacc3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/my-awesome-packages/foundation/zipball/a050cebee1032a492af619a85641534bc73eacc3",
+                "reference": "a050cebee1032a492af619a85641534bc73eacc3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.0",
+                "php": "^8.1",
+                "ramsey/uuid": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Awesome\\Foundation\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Awesome foundation",
+            "support": {
+                "source": "https://github.com/my-awesome-packages/foundation/tree/v1.0.0",
+                "issues": "https://github.com/my-awesome-packages/foundation/issues"
+            },
+            "time": "2022-06-30T22:40:23+00:00"
+        },
+        {
+            "name": "my-awesome-packages/rest",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:my-awesome-packages/rest.git",
+                "reference": "1a9d36965d451e17b880b3e3b1f93b354f1395dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/my-awesome-packages/rest/zipball/1a9d36965d451e17b880b3e3b1f93b354f1395dd",
+                "reference": "1a9d36965d451e17b880b3e3b1f93b354f1395dd",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^9.0",
+                "illuminate/support": "^9.0",
+                "illuminate/validation": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Awesome\\Rest\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "v.lebedev",
+                    "email": "shadar147@gmail.com"
+                }
+            ],
+            "description": "Awesome rest",
+            "support": {
+                "source": "https://github.com/my-awesome-packages/rest/tree/v1.0.1",
+                "issues": "https://github.com/my-awesome-packages/rest/issues"
+            },
+            "time": "2022-07-31T10:53:10+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -7767,5 +7847,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
