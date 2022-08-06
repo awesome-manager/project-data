@@ -19,7 +19,9 @@ class ProjectRepository extends AbstractRepository implements RepositoryContract
                 'budget',
                 'expected_profitability',
                 'average_rate',
-                'comment'
+                'comment',
+                'started_at',
+                'ended_at'
             ])->where('is_active', true)
             ->orderByDesc('started_at')
             ->get();
