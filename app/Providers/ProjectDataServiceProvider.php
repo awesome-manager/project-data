@@ -24,7 +24,25 @@ class ProjectDataServiceProvider extends ServiceProvider implements DeferrablePr
      */
     private function registerRepositories(): void
     {
-        //
+        $this->app->bind(Contracts\Repositories\ProjectRepository::class, function () {
+            return new Repositories\ProjectRepository(new Models\Project());
+        });
+
+        $this->app->bind(Contracts\Repositories\GroupCustomerRepository::class, function () {
+            return new Repositories\GroupCustomerRepository(new Models\GroupCustomer());
+        });
+
+        $this->app->bind(Contracts\Repositories\GroupRepository::class, function () {
+            return new Repositories\GroupRepository(new Models\Group());
+        });
+
+        $this->app->bind(Contracts\Repositories\CustomerRepository::class, function () {
+            return new Repositories\CustomerRepository(new Models\Customer());
+        });
+
+        $this->app->bind(Contracts\Repositories\StatusRepository::class, function () {
+            return new Repositories\StatusRepository(new Models\Status());
+        });
     }
 
     /**
@@ -41,7 +59,11 @@ class ProjectDataServiceProvider extends ServiceProvider implements DeferrablePr
     public function provides(): array
     {
         return [
-            //
+            Contracts\Repositories\GroupRepository::class,
+            Contracts\Repositories\StatusRepository::class,
+            Contracts\Repositories\ProjectRepository::class,
+            Contracts\Repositories\CustomerRepository::class,
+            Contracts\Repositories\GroupCustomerRepository::class,
         ];
     }
 }
