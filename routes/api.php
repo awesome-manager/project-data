@@ -38,4 +38,11 @@ Route::prefix('v1')->group(function () {
             'as' => 'api.customers.find'
         ]);
     });
+
+    Route::group(['prefix' => 'groups', 'namespace' => 'Group'], function () {
+        Route::get('/', [
+            'uses' => 'GroupController@findGroups',
+            'as' => 'api.groups.find'
+        ]);
+    });
 });

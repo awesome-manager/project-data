@@ -8,5 +8,7 @@ interface GroupCustomerRepository
 {
     public function findByIds(array $ids): Collection;
 
+    public function findByGroups(array $ids): Collection;
+
     public function findByCustomers(array $ids): Collection;
 }

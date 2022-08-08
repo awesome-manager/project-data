@@ -18,6 +18,18 @@ class GroupCustomerRepository extends AbstractRepository implements RepositoryCo
             ->find($ids);
     }
 
+    public function findByGroups(array $ids): Collection
+    {
+        if (empty($ids)) {
+            return $this->getCollection();
+        }
+
+        return $this->getModel()->newQuery()
+            ->select(['id', 'group_id', 'customer_id'])
+            ->whereIn('group_id', $ids)
+            ->get();
+    }
+
     public function findByCustomers(array $ids): Collection
     {
         if (empty($ids)) {
