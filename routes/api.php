@@ -24,4 +24,11 @@ Route::prefix('v1')->group(function () {
             'as' => 'api.projects.find'
         ]);
     });
+
+    Route::group(['prefix' => 'statuses', 'namespace' => 'Status'], function () {
+        Route::get('/', [
+            'uses' => 'StatusController@findStatuses',
+            'as' => 'api.statuses.find'
+        ]);
+    });
 });

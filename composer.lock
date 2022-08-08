@@ -1677,16 +1677,16 @@
         },
         {
             "name": "my-awesome-packages/rest",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:my-awesome-packages/rest.git",
-                "reference": "1a9d36965d451e17b880b3e3b1f93b354f1395dd"
+                "reference": "d90ba26f485dc8a858158cc3e0411605ec4f71c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/my-awesome-packages/rest/zipball/1a9d36965d451e17b880b3e3b1f93b354f1395dd",
-                "reference": "1a9d36965d451e17b880b3e3b1f93b354f1395dd",
+                "url": "https://api.github.com/repos/my-awesome-packages/rest/zipball/d90ba26f485dc8a858158cc3e0411605ec4f71c1",
+                "reference": "d90ba26f485dc8a858158cc3e0411605ec4f71c1",
                 "shasum": ""
             },
             "require": {
@@ -1713,10 +1713,10 @@
             ],
             "description": "Awesome rest",
             "support": {
-                "source": "https://github.com/my-awesome-packages/rest/tree/v1.0.1",
+                "source": "https://github.com/my-awesome-packages/rest/tree/v1.0.2",
                 "issues": "https://github.com/my-awesome-packages/rest/issues"
             },
-            "time": "2022-07-31T10:53:10+00:00"
+            "time": "2022-08-08T05:51:44+00:00"
         },
         {
             "name": "nesbot/carbon",
