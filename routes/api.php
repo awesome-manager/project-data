@@ -31,4 +31,11 @@ Route::prefix('v1')->group(function () {
             'as' => 'api.statuses.find'
         ]);
     });
+
+    Route::group(['prefix' => 'customers', 'namespace' => 'Customer'], function () {
+        Route::get('/', [
+            'uses' => 'CustomerController@findCustomers',
+            'as' => 'api.customers.find'
+        ]);
+    });
 });

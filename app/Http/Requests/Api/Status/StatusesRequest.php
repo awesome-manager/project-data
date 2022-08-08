@@ -2,15 +2,9 @@
 
 namespace App\Http\Requests\Api\Status;
 
-use Awesome\Rest\Requests\AbstractFormRequest;
+use App\Http\Requests\Api\Templates\FilledIdsRequest;
 
-class StatusesRequest extends AbstractFormRequest
+class StatusesRequest extends FilledIdsRequest
 {
-    public function rules()
-    {
-        return [
-            'ids' => 'filled|array',
-            'ids.*' => 'required|uuid',
-        ];
-    }
+    //
 }

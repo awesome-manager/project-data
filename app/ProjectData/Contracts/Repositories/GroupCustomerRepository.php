@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 interface GroupCustomerRepository
 {
     public function findByIds(array $ids): Collection;
+
+    public function findByCustomers(array $ids): Collection;
 }
