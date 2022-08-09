@@ -15,19 +15,13 @@ class ProjectController extends Controller
     {
         $projects = Repository::projects()->findAllActive();
 
-        [$groupCustomers, $statuses] = [
-            Repository::groupCustomer()->findByIds($this->pluckUniqueAttr($projects, 'group_customer_id')),
-            Repository::statuses()->findByIds($this->pluckUniqueAttr($projects, 'status_id'))
-        ];
-
-        [$groups, $customers] = [
-            Repository::groups()->findByIds($this->pluckUniqueAttr($groupCustomers, 'group_id')),
-            Repository::customers()->findByIds($this->pluckUniqueAttr($groupCustomers, 'customer_id'))
-        ];
+        $groupCustomers =  Repository::groupCustomer()->findByIds(
+            $this->pluckUniqueAttr($projects, 'group_customer_id')
+        );
 
         return response()->jsonResponse(
             (new ProjectsResource(
-                collect(compact('projects', 'statuses', 'groupCustomers', 'groups', 'customers'))
+                collect(compact('projects', 'groupCustomers'))
             ))->toArray()
         );
     }
