@@ -34,7 +34,7 @@ class GroupsResource extends ResourceCollection
         ];
 
         if ($this->groupCustomer) {
-            $res[ 'available_customers'] = $this->groupCustomer->map(function ($groupCustomer) {
+            $res['available_customers'] = $this->groupCustomer->map(function ($groupCustomer) {
                 return [
                     'id' => $this->string($groupCustomer->id),
                     'group_id' => $this->string($groupCustomer->group_id),
