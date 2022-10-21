@@ -21,7 +21,7 @@ class GroupsResource extends ResourceCollection
         parent::__construct($resource);
     }
 
-    public function toArray($request = null)
+    public function toArray($request = null): array
     {
         $res = [
             'groups' => $this->groups->map(function ($group) {
