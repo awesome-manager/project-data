@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Api\Customer;
 
-use App\Http\Requests\Api\Templates\FilledIdsRequest;
+use Awesome\Rest\Requests\FilledIdsRequest;
 
 class CustomersRequest extends FilledIdsRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return array_merge(parent::rules(), [
-            'with_available' => 'boolean|filled'
+            'with_available' => 'filled|boolean'
         ]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\ProjectData\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\{Model, Collection};
 use App\ProjectData\Contracts\Repositories\ProjectRepository as RepositoryContract;
 
 class ProjectRepository extends AbstractRepository implements RepositoryContract
@@ -25,5 +25,10 @@ class ProjectRepository extends AbstractRepository implements RepositoryContract
             ])->where('is_active', true)
             ->orderByDesc('started_at')
             ->get();
+    }
+
+    public function create(array $properties): ?Model
+    {
+        return $this->getModel()->newQuery()->create($properties);
     }
 }

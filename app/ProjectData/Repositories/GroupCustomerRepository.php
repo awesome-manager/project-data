@@ -2,7 +2,7 @@
 
 namespace App\ProjectData\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\{Model, Collection};
 use App\ProjectData\Contracts\Repositories\GroupCustomerRepository as RepositoryContract;
 
 class GroupCustomerRepository extends AbstractRepository implements RepositoryContract
@@ -40,5 +40,14 @@ class GroupCustomerRepository extends AbstractRepository implements RepositoryCo
             ->select(['id', 'group_id', 'customer_id'])
             ->whereIn('customer_id', $ids)
             ->get();
+    }
+
+    public function getByGroupAndCustomer(string $groupId, string $customerId): ?Model
+    {
+        return $this->getModel()->newQuery()
+            ->select(['id'])
+            ->where('group_id', $groupId)
+            ->where('customer_id', $customerId)
+            ->first();
     }
 }

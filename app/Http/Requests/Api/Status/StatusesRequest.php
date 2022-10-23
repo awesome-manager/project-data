@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api\Status;
 
-use App\Http\Requests\Api\Templates\FilledIdsRequest;
+use Awesome\Rest\Requests\FilledIdsRequest;
 
 class StatusesRequest extends FilledIdsRequest
 {
