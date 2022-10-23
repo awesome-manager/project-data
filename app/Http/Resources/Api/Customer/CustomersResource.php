@@ -21,7 +21,7 @@ class CustomersResource extends ResourceCollection
         parent::__construct($resource);
     }
 
-    public function toArray($request = null)
+    public function toArray($request = null): array
     {
         $res = [
             'customers' => $this->customers->map(function ($customer) {

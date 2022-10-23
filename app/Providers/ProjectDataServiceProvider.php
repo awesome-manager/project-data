@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models;
+use App\ProjectData\Services;
 use App\ProjectData\Contracts;
 use App\ProjectData\Repositories;
 use Illuminate\Support\ServiceProvider;
@@ -50,7 +51,9 @@ class ProjectDataServiceProvider extends ServiceProvider implements DeferrablePr
      */
     private function registerServices(): void
     {
-        //
+        $this->app->bind(
+            Contracts\Services\ProjectService::class, Services\ProjectService::class
+        );
     }
 
     /**
@@ -64,6 +67,8 @@ class ProjectDataServiceProvider extends ServiceProvider implements DeferrablePr
             Contracts\Repositories\ProjectRepository::class,
             Contracts\Repositories\CustomerRepository::class,
             Contracts\Repositories\GroupCustomerRepository::class,
+
+            Contracts\Services\ProjectService::class,
         ];
     }
 }

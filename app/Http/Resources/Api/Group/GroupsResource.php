@@ -21,7 +21,7 @@ class GroupsResource extends ResourceCollection
         parent::__construct($resource);
     }
 
-    public function toArray($request = null)
+    public function toArray($request = null): array
     {
         $res = [
             'groups' => $this->groups->map(function ($group) {
@@ -34,7 +34,7 @@ class GroupsResource extends ResourceCollection
         ];
 
         if ($this->groupCustomer) {
-            $res[ 'available_customers'] = $this->groupCustomer->map(function ($groupCustomer) {
+            $res['available_customers'] = $this->groupCustomer->map(function ($groupCustomer) {
                 return [
                     'id' => $this->string($groupCustomer->id),
                     'group_id' => $this->string($groupCustomer->group_id),

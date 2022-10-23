@@ -23,6 +23,10 @@ Route::prefix('v1')->group(function () {
             'uses' => 'ProjectController@findProjects',
             'as' => 'api.projects.find'
         ]);
+        Route::post('/', [
+            'uses' => 'ProjectController@createProject',
+            'as' => 'api.projects.create'
+        ]);
     });
 
     Route::group(['prefix' => 'statuses', 'namespace' => 'Status'], function () {
