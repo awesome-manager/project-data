@@ -3,12 +3,13 @@
 namespace Tests\Feature\Api\Statuses;
 
 use App\Models\Status;
+use App\Traits\Tests\Queryable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class StatusTest extends TestCase
 {
-    use RefreshDatabase;
+    use Queryable, RefreshDatabase;
 
     private array $routes = [
         'list' => '/api/v1/statuses'
@@ -27,7 +28,7 @@ class StatusTest extends TestCase
     {
         $status = Status::factory()->create(['is_active' => true]);
 
-        $response = $this->get("{$this->routes['list']}?ids[]={$status->id}");
+        $response = $this->get($this->routes['list'] . $this->buildIdsQuery([$status->id]));
 
         $response->assertOk()
             ->assertJsonStructure($this->getListStruture())
@@ -38,7 +39,7 @@ class StatusTest extends TestCase
     {
         $status = Status::factory()->create(['is_active' => false]);
 
-        $response = $this->get("{$this->routes['list']}?ids[]={$status->id}");
+        $response = $this->get($this->routes['list'] . $this->buildIdsQuery([$status->id]));
 
         $response->assertOk()
             ->assertJsonStructure($this->getListStruture())

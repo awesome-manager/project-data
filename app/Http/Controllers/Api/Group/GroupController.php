@@ -20,10 +20,10 @@ class GroupController extends Controller
 
         $groupCustomer = $request->query('with_available')
             ? Repository::groupCustomer()->findByGroups($this->pluckUniqueAttr($groups, 'id'))
-            : null;
+            : collect();
 
         return response()->jsonResponse(
-            (new GroupsResource(collect(compact('groups', 'groupCustomer'))))->toArray()
+            (new GroupsResource(collect(compact('groups', 'groupCustomer'))))->toArray($request)
         );
     }
 }

@@ -33,8 +33,8 @@ class CustomersResource extends ResourceCollection
             })
         ];
 
-        if ($request->query('with_available')) {
-            $res['available_projects'] = $this->groupCustomer->map(function ($groupCustomer) {
+        if (!is_null($request) && $request->query('with_available')) {
+            $res['available_groups'] = $this->groupCustomer->map(function ($groupCustomer) {
                 return [
                     'id' => $this->string($groupCustomer->id),
                     'group_id' => $this->string($groupCustomer->group_id),
