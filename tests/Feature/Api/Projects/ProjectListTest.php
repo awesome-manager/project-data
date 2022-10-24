@@ -13,7 +13,7 @@ class ProjectListTest extends TestCase
 
     private string $route = '/api/v1/projects';
 
-    public function test_find_all_without_relations(): void
+    public function test_find_all(): void
     {
         Project::factory()->count(10)->create();
 
