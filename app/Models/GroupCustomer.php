@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Awesome\Foundation\Traits\Models\AwesomeModel;
+use Database\Factories\GroupCustomerFactory;
+use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class GroupCustomer extends Model
 {
-    use AwesomeModel;
+    use AwesomeModel, HasFactory;
 
     protected $table = 'group_customer';
 
@@ -23,12 +26,17 @@ class GroupCustomer extends Model
         'customer_id'
     ];
 
-    public function group()
+    public static function newFactory(): Factory
+    {
+        return GroupCustomerFactory::new();
+    }
+
+    public function group(): HasOne
     {
         return $this->hasOne(Group::class, 'id', 'group_id');
     }
 
-    public function customer()
+    public function customer(): HasOne
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }

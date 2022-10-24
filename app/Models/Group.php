@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Awesome\Foundation\Traits\Models\AwesomeModel;
+use Database\Factories\GroupFacroty;
+use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
+use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    use AwesomeModel;
+    use AwesomeModel, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -19,4 +21,9 @@ class Group extends Model
         'title',
         'is_active'
     ];
+
+    public static function newFactory(): Factory
+    {
+        return GroupFacroty::new();
+    }
 }

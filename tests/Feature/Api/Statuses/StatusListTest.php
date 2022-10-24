@@ -1,0 +1,62 @@
+<?php
+
+namespace Tests\Feature\Api\Statuses;
+
+use App\Models\Status;
+use App\Traits\Tests\Queryable;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class StatusListTest extends TestCase
+{
+    use Queryable, RefreshDatabase;
+
+    private string $route = '/api/v1/statuses';
+
+    public function test_find_all(): void
+    {
+        Status::factory()->count(10)->create();
+
+        $response = $this->get($this->route);
+
+        $response->assertOk()->assertJsonStructure($this->getListStruture());
+    }
+
+    public function test_find_specific(): void
+    {
+        $status = Status::factory()->create(['is_active' => true]);
+
+        $response = $this->get($this->route . $this->buildIdsQuery([$status->id]));
+
+        $response->assertOk()
+            ->assertJsonStructure($this->getListStruture())
+            ->assertJsonCount(1, 'content.statuses');
+    }
+
+    public function test_find_specific_deactivated(): void
+    {
+        $status = Status::factory()->create(['is_active' => false]);
+
+        $response = $this->get($this->route . $this->buildIdsQuery([$status->id]));
+
+        $response->assertOk()
+            ->assertJsonStructure($this->getListStruture())
+            ->assertJsonCount(0, 'content.statuses');
+    }
+
+    private function getListStruture(): array
+    {
+        return [
+            'error',
+            'content' => [
+                'statuses' => [
+                    '*' => [
+                        'id',
+                        'code',
+                        'title',
+                    ]
+                ]
+            ]
+        ];
+    }
+}

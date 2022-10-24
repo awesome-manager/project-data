@@ -35,15 +35,12 @@ class StatusesSeeder extends Seeder
         ]
     ];
 
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         foreach ($this->data as $el) {
-            Status::query()->create($el);
+            if (!Status::query()->where('code', $el['code'])->exists()) {
+                Status::query()->create($el);
+            }
         }
     }
 }

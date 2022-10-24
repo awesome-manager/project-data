@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Awesome\Foundation\Traits\Models\AwesomeModel;
+use Database\Factories\ProjectFactory;
+use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Project extends Model
 {
-    use AwesomeModel;
+    use AwesomeModel, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -34,12 +37,17 @@ class Project extends Model
         'ended_at',
     ];
 
-    public function status()
+    protected static function newFactory(): Factory
+    {
+        return ProjectFactory::new();
+    }
+
+    public function status(): HasOne
     {
         return $this->hasOne(Status::class, 'id', 'status_id');
     }
 
-    public function groupCustomer()
+    public function groupCustomer(): HasOne
     {
         return $this->hasOne(GroupCustomer::class, 'id','group_customer_id');
     }
