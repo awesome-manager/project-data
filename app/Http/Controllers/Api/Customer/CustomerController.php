@@ -20,10 +20,10 @@ class CustomerController extends Controller
 
         $groupCustomer = $request->query('with_available')
             ? Repository::groupCustomer()->findByCustomers($this->pluckUniqueAttr($customers, 'id'))
-            : null;
+            : collect();
 
         return response()->jsonResponse(
-            (new CustomersResource(collect(compact('customers', 'groupCustomer'))))->toArray()
+            (new CustomersResource(collect(compact('customers', 'groupCustomer'))))->toArray($request)
         );
     }
 }

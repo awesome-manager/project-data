@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Statuses;
+namespace Tests\Feature\Api\Statuses;
 
 use App\Models\Status;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,24 +14,16 @@ class StatusTest extends TestCase
         'list' => '/api/v1/statuses'
     ];
 
-    /**
-     * Check find all statuses api
-     *
-     * @return void
-     */
-    public function test_find_all():void
+    public function test_find_all(): void
     {
+        Status::factory()->count(10)->create();
+
         $response = $this->get($this->routes['list']);
 
         $response->assertOk()->assertJsonStructure($this->getListStruture());
     }
 
-    /**
-     * Check find specific statuses api
-     *
-     * @return void
-     */
-    public function test_find_specific()
+    public function test_find_specific(): void
     {
         $status = Status::factory()->create(['is_active' => true]);
 
@@ -42,12 +34,7 @@ class StatusTest extends TestCase
             ->assertJsonCount(1, 'content.statuses');
     }
 
-    /**
-     * Check find specific statuses api
-     *
-     * @return void
-     */
-    public function test_find_specific_deactivated()
+    public function test_find_specific_deactivated(): void
     {
         $status = Status::factory()->create(['is_active' => false]);
 

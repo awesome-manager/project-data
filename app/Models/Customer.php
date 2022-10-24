@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Awesome\Foundation\Traits\Models\AwesomeModel;
+use Database\Factories\CustomerFactory;
+use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
+use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    use AwesomeModel;
+    use AwesomeModel, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +28,9 @@ class Customer extends Model
     protected $casts = [
         'birthday'
     ];
+
+    public static function factory(): Factory
+    {
+        return CustomerFactory::new();
+    }
 }

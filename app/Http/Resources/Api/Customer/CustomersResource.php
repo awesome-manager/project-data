@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources\Api\Customer;
 
-use Illuminate\Database\Eloquent\Collection;
 use Awesome\Foundation\Traits\Resources\Resourceable;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Collection;
 
 class CustomersResource extends ResourceCollection
 {
     use Resourceable;
 
     private Collection $customers;
-    private ?Collection $groupCustomer;
+    private Collection $groupCustomer;
 
     public function __construct($resource)
     {
@@ -33,8 +33,8 @@ class CustomersResource extends ResourceCollection
             })
         ];
 
-        if ($this->groupCustomer) {
-            $res[ 'available_projects'] = $this->groupCustomer->map(function ($groupCustomer) {
+        if ($request->query('with_available')) {
+            $res['available_projects'] = $this->groupCustomer->map(function ($groupCustomer) {
                 return [
                     'id' => $this->string($groupCustomer->id),
                     'group_id' => $this->string($groupCustomer->group_id),
