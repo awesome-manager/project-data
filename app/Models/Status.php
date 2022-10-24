@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\StatusFactory;
+use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
 use Illuminate\Database\Eloquent\Model;
 use Awesome\Foundation\Traits\Models\AwesomeModel;
 
 class Status extends Model
 {
-    use AwesomeModel;
+    use AwesomeModel, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -19,4 +21,9 @@ class Status extends Model
         'title',
         'is_active'
     ];
+
+    public static function factory(): Factory
+    {
+        return StatusFactory::new();
+    }
 }
