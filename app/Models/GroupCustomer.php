@@ -26,7 +26,7 @@ class GroupCustomer extends Model
         'customer_id'
     ];
 
-    public static function factory(): Factory
+    public static function newFactory(): Factory
     {
         return GroupCustomerFactory::new();
     }

@@ -29,7 +29,7 @@ class Customer extends Model
         'birthday'
     ];
 
-    public static function factory(): Factory
+    protected static function newFactory(): Factory
     {
         return CustomerFactory::new();
     }

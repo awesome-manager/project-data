@@ -7,19 +7,17 @@ use App\Traits\Tests\Queryable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class StatusTest extends TestCase
+class StatusListTest extends TestCase
 {
     use Queryable, RefreshDatabase;
 
-    private array $routes = [
-        'list' => '/api/v1/statuses'
-    ];
+    private string $route = '/api/v1/statuses';
 
     public function test_find_all(): void
     {
         Status::factory()->count(10)->create();
 
-        $response = $this->get($this->routes['list']);
+        $response = $this->get($this->route);
 
         $response->assertOk()->assertJsonStructure($this->getListStruture());
     }
@@ -28,7 +26,7 @@ class StatusTest extends TestCase
     {
         $status = Status::factory()->create(['is_active' => true]);
 
-        $response = $this->get($this->routes['list'] . $this->buildIdsQuery([$status->id]));
+        $response = $this->get($this->route . $this->buildIdsQuery([$status->id]));
 
         $response->assertOk()
             ->assertJsonStructure($this->getListStruture())
@@ -39,7 +37,7 @@ class StatusTest extends TestCase
     {
         $status = Status::factory()->create(['is_active' => false]);
 
-        $response = $this->get($this->routes['list'] . $this->buildIdsQuery([$status->id]));
+        $response = $this->get($this->route . $this->buildIdsQuery([$status->id]));
 
         $response->assertOk()
             ->assertJsonStructure($this->getListStruture())

@@ -1,42 +1,40 @@
 <?php
 
-namespace Tests\Feature\Api\Groups;
+namespace Tests\Feature\Api\Customers;
 
-use App\Models\{Group, GroupCustomer};
+use App\Models\{Customer, GroupCustomer};
 use App\Traits\Tests\Queryable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class GroupTest extends TestCase
+class CustomerListTest extends TestCase
 {
     use Queryable, RefreshDatabase;
 
-    private array $routes = [
-        'list' => '/api/v1/groups'
-    ];
+    private string $route = '/api/v1/customers';
 
     public function test_find_all_without_relations(): void
     {
-        Group::factory()->count(10)->create();
+        Customer::factory()->count(10)->create();
 
-        $response = $this->get($this->routes['list']);
+        $response = $this->get($this->route);
 
         $response->assertOk()->assertJsonStructure($this->getListStruture());
     }
 
     public function test_find_all_with_relations(): void
     {
-        $groups = Group::factory()->count(10)->create();
+        $customers = Customer::factory()->count(10)->create();
 
-        $groups->each(function ($group) {
-            if ($group->is_active && rand(0, 1)) {
+        $customers->each(function ($customer) {
+            if ($customer->is_active && rand(0, 1)) {
                 GroupCustomer::factory()->create([
-                    'customer_id' => $group->id
+                    'customer_id' => $customer->id
                 ]);
             }
         });
 
-        $response = $this->get($this->routes['list'] . $this->buildQuery([
+        $response = $this->get($this->route . $this->buildQuery([
             'with_available' => true
         ]));
 
@@ -45,28 +43,26 @@ class GroupTest extends TestCase
 
     public function test_find_specific(): void
     {
-        $groups = Group::factory()->count(rand(1, 10))->create();
+        $customers = Customer::factory()->count(rand(1, 10))->create();
 
         $response = $this->get(
-            $this->routes['list'] . $this->buildIdsQuery($groups->pluck('id')->all())
+            $this->route . $this->buildIdsQuery($customers->pluck('id')->all())
         );
 
         $response->assertOk()
             ->assertJsonStructure($this->getListStruture())
-            ->assertJsonCount($groups->where('is_active', true)->count(), 'content.groups');
+            ->assertJsonCount($customers->where('is_active', true)->count(), 'content.customers');
     }
 
     public function test_find_specific_deactivated(): void
     {
-        $group = Group::factory()->create(['is_active' => false]);
+        $customer = Customer::factory()->create(['is_active' => false]);
 
-        $response = $this->get(
-            $this->routes['list'] . $this->buildIdsQuery([$group->id])
-        );
+        $response = $this->get($this->route . $this->buildIdsQuery([$customer->id]));
 
         $response->assertOk()
             ->assertJsonStructure($this->getListStruture())
-            ->assertJsonCount(0, 'content.groups');
+            ->assertJsonCount(0, 'content.customers');
     }
 
     private function getListStruture(bool $withRelation = false): array
@@ -74,18 +70,18 @@ class GroupTest extends TestCase
         $structure = [
             'error',
             'content' => [
-                'groups' => [
+                'customers' => [
                     '*' => [
                         'id',
-                        'code',
-                        'title',
+                        'name',
+                        'surname',
                     ]
                 ]
             ]
         ];
 
         if ($withRelation) {
-            $structure['content']['available_customers'] = [
+            $structure['content']['available_groups'] = [
                 '*' => [
                     'id',
                     'group_id',

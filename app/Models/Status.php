@@ -22,7 +22,7 @@ class Status extends Model
         'is_active'
     ];
 
-    public static function factory(): Factory
+    public static function newFactory(): Factory
     {
         return StatusFactory::new();
     }
