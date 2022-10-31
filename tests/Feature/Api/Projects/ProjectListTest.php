@@ -3,23 +3,21 @@
 namespace Tests\Feature\Api\Projects;
 
 use App\Models\Project;
-use App\Traits\Tests\Queryable;
+use Awesome\Foundation\Traits\Tests\{DataHandler, Queryable};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ProjectListTest extends TestCase
 {
-    use Queryable, RefreshDatabase;
+    use DataHandler, Queryable, RefreshDatabase;
 
     private string $route = '/api/v1/projects';
 
     public function test_find_all(): void
     {
-        Project::factory()->count(10)->create();
+        Project::createList(10);
 
-        $response = $this->get($this->route);
-
-        $response->assertOk()->assertJsonStructure($this->getListStruture());
+        $this->checkAssert($this->get($this->route), $this->getListStruture());
     }
 
     private function getListStruture(): array

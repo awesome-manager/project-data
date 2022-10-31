@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Awesome\Foundation\Traits\Models\AwesomeModel;
 use Database\Factories\StatusFactory;
-use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
-    use AwesomeModel, HasFactory;
+    use AwesomeModel;
 
     /**
      * The attributes that are mass assignable.

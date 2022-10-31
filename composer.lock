@@ -1646,21 +1646,22 @@
         },
         {
             "name": "my-awesome-packages/foundation",
-            "version": "v1.0.2",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:my-awesome-packages/foundation.git",
-                "reference": "49a520a71e58622a0a7d85a4ef401872ce654891"
+                "reference": "5e3aa7307e8282e45c10a30ec52cc7b72fa1a7b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/my-awesome-packages/foundation/zipball/49a520a71e58622a0a7d85a4ef401872ce654891",
-                "reference": "49a520a71e58622a0a7d85a4ef401872ce654891",
+                "url": "https://api.github.com/repos/my-awesome-packages/foundation/zipball/5e3aa7307e8282e45c10a30ec52cc7b72fa1a7b8",
+                "reference": "5e3aa7307e8282e45c10a30ec52cc7b72fa1a7b8",
                 "shasum": ""
             },
             "require": {
                 "illuminate/database": "^9.0",
                 "illuminate/support": "^9.0",
+                "illuminate/testing": "^9.0",
                 "php": "^8.1",
                 "ramsey/uuid": "^4.0"
             },
@@ -1677,10 +1678,10 @@
             ],
             "description": "Awesome foundation",
             "support": {
-                "source": "https://github.com/my-awesome-packages/foundation/tree/v1.0.2",
+                "source": "https://github.com/my-awesome-packages/foundation/tree/v1.1.1",
                 "issues": "https://github.com/my-awesome-packages/foundation/issues"
             },
-            "time": "2022-08-04T10:24:17+00:00"
+            "time": "2022-10-31T07:49:53+00:00"
         },
         {
             "name": "my-awesome-packages/rest",

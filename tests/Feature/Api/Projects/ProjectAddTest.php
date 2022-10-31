@@ -3,44 +3,47 @@
 namespace Tests\Feature\Api\Projects;
 
 use App\Models\{Customer, Group, GroupCustomer, Project, Status};
-use App\Traits\Tests\Queryable;
+use Awesome\Foundation\Traits\Tests\{DataHandler, Queryable};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ProjectAddTest extends TestCase
 {
-    use Queryable, RefreshDatabase;
+    use DataHandler, Queryable, RefreshDatabase;
 
     private string $route = '/api/v1/projects';
 
     public function test_create_successful(): void
     {
-        $customer = Customer::factory()->create(['is_active' => true]);
-        $group = Group::factory()->create(['is_active' => true]);
-        $status = Status::factory()->create(['is_active' => true]);
-        GroupCustomer::factory()->create([
+        $customer = Customer::createActiveEntity();
+        $group = Group::createActiveEntity();
+        $status = Status::createActiveEntity();
+        GroupCustomer::createEntity([
             'group_id' => $group->id,
             'customer_id' => $customer->id
         ]);
 
-        $response = $this->post($this->route, $this->getValidData($group->id, $customer->id, $status->id));
-
-        $response->assertOk()->assertJsonStructure($this->getSuccessStruture());
+        $this->checkAssert(
+            $this->post($this->route, $this->getValidData($group->id, $customer->id, $status->id)),
+            $this->getSuccessStruture()
+        );
     }
 
     public function test_create_validation_error(): void
     {
-        $customer = Customer::factory()->create(['is_active' => true]);
-        $group = Group::factory()->create(['is_active' => true]);
-        Status::factory()->create(['is_active' => true]);
-        GroupCustomer::factory()->create([
+        $customer = Customer::createActiveEntity();
+        $group = Group::createActiveEntity();
+        Status::createActiveEntity();
+        GroupCustomer::createEntity([
             'group_id' => $group->id,
             'customer_id' => $customer->id
         ]);
 
         $response = $this->post($this->route, $this->getInvalidData());
 
-        $response->assertOk()->assertJsonStructure($this->getErrorStruture())->assertJson([
+        $this->checkAssert($response, $this->getErrorStruture());
+
+        $response->assertJson([
             'content' => [
                 'error_code' => 'validation_error'
             ]
@@ -49,14 +52,16 @@ class ProjectAddTest extends TestCase
 
     public function test_create_exception_error(): void
     {
-        $customer = Customer::factory()->create(['is_active' => true]);
-        $group = Group::factory()->create(['is_active' => true]);
-        $status = Status::factory()->create(['is_active' => true]);
-        GroupCustomer::factory()->create();
+        $customer = Customer::createActiveEntity();
+        $group = Group::createActiveEntity();
+        $status = Status::createActiveEntity();
+        GroupCustomer::createEntity();
 
         $response = $this->post($this->route, $this->getValidData($group->id, $customer->id, $status->id));
 
-        $response->assertOk()->assertJsonStructure($this->getErrorStruture())->assertJson([
+        $this->checkAssert($response, $this->getErrorStruture());
+
+        $response->assertJson([
             'content' => [
                 'error_code' => 'group_customer_not_found'
             ]

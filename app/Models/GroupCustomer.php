@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Awesome\Foundation\Traits\Models\AwesomeModel;
 use Database\Factories\GroupCustomerFactory;
-use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class GroupCustomer extends Model
 {
-    use AwesomeModel, HasFactory;
+    use AwesomeModel;
 
     protected $table = 'group_customer';
 

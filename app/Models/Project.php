@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Awesome\Foundation\Traits\Models\AwesomeModel;
 use Database\Factories\ProjectFactory;
-use Illuminate\Database\Eloquent\Factories\{Factory, HasFactory};
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Project extends Model
 {
-    use AwesomeModel, HasFactory;
+    use AwesomeModel;
 
     /**
      * The attributes that are mass assignable.

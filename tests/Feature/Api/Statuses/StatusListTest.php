@@ -3,45 +3,45 @@
 namespace Tests\Feature\Api\Statuses;
 
 use App\Models\Status;
-use App\Traits\Tests\Queryable;
+use Awesome\Foundation\Traits\Tests\{DataHandler, Queryable};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class StatusListTest extends TestCase
 {
-    use Queryable, RefreshDatabase;
+    use DataHandler, Queryable, RefreshDatabase;
 
     private string $route = '/api/v1/statuses';
 
     public function test_find_all(): void
     {
-        Status::factory()->count(10)->create();
+        Status::createList(10);
 
-        $response = $this->get($this->route);
-
-        $response->assertOk()->assertJsonStructure($this->getListStruture());
+        $this->checkAssert($this->get($this->route), $this->getListStruture());
     }
 
     public function test_find_specific(): void
     {
-        $status = Status::factory()->create(['is_active' => true]);
+        $status = Status::createActiveEntity();
 
-        $response = $this->get($this->route . $this->buildIdsQuery([$status->id]));
-
-        $response->assertOk()
-            ->assertJsonStructure($this->getListStruture())
-            ->assertJsonCount(1, 'content.statuses');
+        $this->checkAssert(
+            $this->get($this->route . $this->buildIdsQuery([$status->id])),
+            $this->getListStruture(),
+            1,
+            'content.statuses'
+        );
     }
 
     public function test_find_specific_deactivated(): void
     {
-        $status = Status::factory()->create(['is_active' => false]);
+        $status = Status::createEntity(['is_active' => false]);
 
-        $response = $this->get($this->route . $this->buildIdsQuery([$status->id]));
-
-        $response->assertOk()
-            ->assertJsonStructure($this->getListStruture())
-            ->assertJsonCount(0, 'content.statuses');
+        $this->checkAssert(
+            $this->get($this->route . $this->buildIdsQuery([$status->id])),
+            $this->getListStruture(),
+            0,
+            'content.statuses'
+        );
     }
 
     private function getListStruture(): array

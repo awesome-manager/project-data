@@ -3,68 +3,60 @@
 namespace Tests\Feature\Api\Groups;
 
 use App\Models\{Group, GroupCustomer};
-use App\Traits\Tests\Queryable;
+use Awesome\Foundation\Traits\Tests\{DataHandler, Queryable};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class GroupListTest extends TestCase
 {
-    use Queryable, RefreshDatabase;
+    use DataHandler, Queryable, RefreshDatabase;
 
     private string $route = '/api/v1/groups';
 
     public function test_find_all_without_relations(): void
     {
-        Group::factory()->count(10)->create();
+        Group::createList(10);
 
-        $response = $this->get($this->route);
-
-        $response->assertOk()->assertJsonStructure($this->getListStruture());
+        $this->checkAssert($this->get($this->route), $this->getListStruture());
     }
 
     public function test_find_all_with_relations(): void
     {
-        $groups = Group::factory()->count(10)->create();
+        $groups = Group::createList(10);
 
-        $groups->each(function ($group) {
-            if ($group->is_active && rand(0, 1)) {
-                GroupCustomer::factory()->create([
-                    'customer_id' => $group->id
-                ]);
-            }
-        });
+        GroupCustomer::createCustomList($this->createCustomData(
+            rand(0, $groups->where('is_active', true)->count()),
+            ['customer_id' => $groups->where('is_active', true)]
+        ));
 
-        $response = $this->get($this->route . $this->buildQuery([
-            'with_available' => true
-        ]));
-
-        $response->assertOk()->assertJsonStructure($this->getListStruture(true));
+        $this->checkAssert(
+            $this->get($this->route . $this->buildQuery(['with_available' => true])),
+            $this->getListStruture(true)
+        );
     }
 
     public function test_find_specific(): void
     {
-        $groups = Group::factory()->count(rand(1, 10))->create();
+        $groups = Group::createList(rand(1, 10));
 
-        $response = $this->get(
-            $this->route . $this->buildIdsQuery($groups->pluck('id')->all())
+        $this->checkAssert(
+            $this->get($this->route . $this->buildIdsQuery($groups->pluck('id')->all())),
+            $this->getListStruture(),
+            $groups->where('is_active', true)->count(),
+            'content.groups'
         );
-
-        $response->assertOk()
-            ->assertJsonStructure($this->getListStruture())
-            ->assertJsonCount($groups->where('is_active', true)->count(), 'content.groups');
     }
 
     public function test_find_specific_deactivated(): void
     {
-        $group = Group::factory()->create(['is_active' => false]);
+        $group = Group::createEntity(['is_active' => false]);
 
-        $response = $this->get(
-            $this->route . $this->buildIdsQuery([$group->id])
+        $this->checkAssert(
+            $this->get($this->route . $this->buildIdsQuery([$group->id])),
+            $this->getListStruture(),
+            0,
+            'content.groups'
         );
-
-        $response->assertOk()
-            ->assertJsonStructure($this->getListStruture())
-            ->assertJsonCount(0, 'content.groups');
     }
 
     private function getListStruture(bool $withRelation = false): array
