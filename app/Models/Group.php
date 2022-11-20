@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Awesome\Foundation\Traits\Models\AwesomeModel;
-use Database\Factories\GroupFacroty;
+use Database\Factories\GroupFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +24,6 @@ class Group extends Model
 
     public static function newFactory(): Factory
     {
-        return GroupFacroty::new();
+        return GroupFactory::new();
     }
 }
