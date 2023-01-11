@@ -2,14 +2,27 @@
 
 namespace App\ProjectData\Services;
 
-use Illuminate\Support\Arr;
 use App\Facades\Repository;
-use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\GroupCustomerNotFoundException;
 use App\ProjectData\Contracts\Services\ProjectService as ServiceContract;
+use Illuminate\Database\Eloquent\{Collection, Model};
+use Illuminate\Support\Arr;
 
 class ProjectService implements ServiceContract
 {
+    public function find(array $ids = [], bool $activeOnly = true): Collection
+    {
+        if (empty($ids)) {
+            if ($activeOnly) {
+                return Repository::projects()->findAllActive();
+            } else {
+                return Repository::projects()->findAll();
+            }
+        } else {
+            return Repository::projects()->findByIds($ids, $activeOnly);
+        }
+    }
+
     public function create(array $properties): ?Model
     {
         $groupCustomer = Repository::groupCustomer()->getByGroupAndCustomer(

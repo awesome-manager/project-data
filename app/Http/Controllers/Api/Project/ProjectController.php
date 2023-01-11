@@ -4,19 +4,22 @@ namespace App\Http\Controllers\Api\Project;
 
 use App\Facades\Repository;
 use App\Http\Controllers\Controller;
-use Awesome\Rest\Resources\SuccessResource;
-use App\Http\Requests\Api\Project\CreateRequest;
+use App\Http\Requests\Api\Project\{CreateRequest, FindRequest};
 use App\Http\Resources\Api\Project\ProjectsResource;
 use App\ProjectData\Contracts\Services\ProjectService;
 use Awesome\Foundation\Traits\Collections\Collectible;
+use Awesome\Rest\Resources\SuccessResource;
 
 class ProjectController extends Controller
 {
     use Collectible;
 
-    public function findProjects()
+    public function findProjects(FindRequest $request, ProjectService $service)
     {
-        $projects = Repository::projects()->findAllActive();
+        $projects = $service->find(
+            $request->query('ids', []),
+            $request->query('active_only', false)
+        );
 
         $groupCustomers =  Repository::groupCustomer()->findByIds(
             $this->pluckUniqueAttr($projects, 'group_customer_id')
