@@ -18,7 +18,7 @@ class ProjectListTest extends TestCase
         $projects = Project::createList(10);
 
         $this->checkAssert(
-            $this->get($this->route),
+            $this->get($this->route . $this->buildQuery(['active_only' => 0])),
             $this->getListStructure(),
             $projects->count(),
             'content.projects'
@@ -30,7 +30,7 @@ class ProjectListTest extends TestCase
         $projects = Project::createList(10);
 
         $this->checkAssert(
-            $this->get($this->route . $this->buildQuery(['active_only' => 1])),
+            $this->get($this->route),
             $this->getListStructure(),
             $projects->where('is_active', true)->count(),
             'content.projects'
@@ -44,7 +44,11 @@ class ProjectListTest extends TestCase
         $randomProjects = $projects->random(rand(1, 10));
 
         $this->checkAssert(
-            $this->get($this->route . $this->buildIdsQuery($randomProjects->pluck('id')->all())),
+            $this->get($this->route . $this->buildQuery([
+                    'ids' => $randomProjects->pluck('id')->all(),
+                    'active_only' => 0
+                ])
+            ),
             $this->getListStructure(),
             $randomProjects->count(),
             'content.projects'
@@ -58,11 +62,7 @@ class ProjectListTest extends TestCase
         $randomProjects = $projects->random(rand(1, 10));
 
         $this->checkAssert(
-            $this->get($this->route . $this->buildQuery([
-                    'ids' => $randomProjects->pluck('id')->all(),
-                    'active_only' => 1
-                ])
-            ),
+            $this->get($this->route . $this->buildIdsQuery($randomProjects->pluck('id')->all())),
             $this->getListStructure(),
             $randomProjects->where('is_active', true)->count(),
             'content.projects'

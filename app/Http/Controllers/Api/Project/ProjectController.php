@@ -18,7 +18,7 @@ class ProjectController extends Controller
     {
         $projects = $service->find(
             $request->query('ids', []),
-            $request->query('active_only', false)
+            $request->query('active_only', true)
         );
 
         $groupCustomers =  Repository::groupCustomer()->findByIds(
