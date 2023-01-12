@@ -15,12 +15,61 @@ class ProjectListTest extends TestCase
 
     public function test_find_all(): void
     {
-        Project::createList(10);
+        $projects = Project::createList(10);
 
-        $this->checkAssert($this->get($this->route), $this->getListStruture());
+        $this->checkAssert(
+            $this->get($this->route . $this->buildQuery(['active_only' => 0])),
+            $this->getListStructure(),
+            $projects->count(),
+            'content.projects'
+        );
     }
 
-    private function getListStruture(): array
+    public function test_find_all_active(): void
+    {
+        $projects = Project::createList(10);
+
+        $this->checkAssert(
+            $this->get($this->route),
+            $this->getListStructure(),
+            $projects->where('is_active', true)->count(),
+            'content.projects'
+        );
+    }
+
+    public function test_find_by_ids(): void
+    {
+        $projects = Project::createList(10);
+
+        $randomProjects = $projects->random(rand(1, 10));
+
+        $this->checkAssert(
+            $this->get($this->route . $this->buildQuery([
+                    'ids' => $randomProjects->pluck('id')->all(),
+                    'active_only' => 0
+                ])
+            ),
+            $this->getListStructure(),
+            $randomProjects->count(),
+            'content.projects'
+        );
+    }
+
+    public function test_find_active_by_ids(): void
+    {
+        $projects = Project::createList(10);
+
+        $randomProjects = $projects->random(rand(1, 10));
+
+        $this->checkAssert(
+            $this->get($this->route . $this->buildIdsQuery($randomProjects->pluck('id')->all())),
+            $this->getListStructure(),
+            $randomProjects->where('is_active', true)->count(),
+            'content.projects'
+        );
+    }
+
+    private function getListStructure(): array
     {
         return [
             'error',

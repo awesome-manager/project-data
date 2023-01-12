@@ -2,12 +2,36 @@
 
 namespace App\ProjectData\Repositories;
 
-use Illuminate\Database\Eloquent\{Model, Collection};
+use Illuminate\Database\Eloquent\{Builder, Collection, Model};
 use App\ProjectData\Contracts\Repositories\ProjectRepository as RepositoryContract;
 
 class ProjectRepository extends AbstractRepository implements RepositoryContract
 {
     public function findAllActive(): Collection
+    {
+        return $this->defaultFindRequest()->get();
+    }
+
+    public function findAll(): Collection
+    {
+        return $this->defaultFindRequest(false)->get();
+    }
+
+    public function findByIds(array $ids, bool $activeOnly = true): Collection
+    {
+        if (empty($ids)) {
+            return $this->getCollection();
+        }
+
+        return $this->defaultFindRequest($activeOnly)->find($ids);
+    }
+
+    public function create(array $properties): ?Model
+    {
+        return $this->getModel()->newQuery()->create($properties);
+    }
+
+    private function defaultFindRequest(bool $activeOnly = true): Builder
     {
         return $this->getModel()->newQuery()
             ->select([
@@ -22,13 +46,10 @@ class ProjectRepository extends AbstractRepository implements RepositoryContract
                 'comment',
                 'started_at',
                 'ended_at'
-            ])->where('is_active', true)
-            ->orderByDesc('started_at')
-            ->get();
-    }
-
-    public function create(array $properties): ?Model
-    {
-        return $this->getModel()->newQuery()->create($properties);
+            ])
+            ->when($activeOnly, function (Builder $query) {
+                return $query->where('is_active', true);
+            })
+            ->orderByDesc('started_at');
     }
 }
